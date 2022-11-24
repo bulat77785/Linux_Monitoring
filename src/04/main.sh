@@ -1,6 +1,7 @@
 #!/bin/bash
 
-. ./data02.sh
+. ./data04.sh
+. ./color.conf
 
 HOSTNAME=$(hostname)
 timedatectl set-timezone Europe/Moscow
@@ -20,16 +21,12 @@ SPACE_ROOT=$(df /root | awk '/dev/ {printf "%.2f MB\n", $2/1024}')
 SPACE_ROOT_USED=$(df /root | awk '/dev/ {printf "%.2f MB\n", $3/1024}')
 SPACE_ROOT_FREE=$(df /root | awk '/dev/ {printf "%.2f MB\n", $4/1024}')
 
+number="^[1-6]$"
+default1=0
+default2=0
+default3=0
+default4=0
+
+choose_all
 stamp
-
-read -p "Write data to a file (Press Y/N)?: " answer
-
-if [[ $answer = Y ]] || [[ $answer = y ]]
-then
-	today_date=$(date +"%d_%m_%y_%H_%M_%S.status")
-	touch $today_date
-	stamp > "$today_date"
-	echo "The data is written to the file of the current directory"
-else
-	echo "No data recorded"
-fi
+sample $default1 $default2 $default3 $default4
